@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TDMH AGIMAT Audit Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .section-card { border-left: 5px solid #2563eb; margin-bottom: 1.5rem; padding: 1rem; background: #f8fafc; border-radius: 8px; }
+        .mandatory { color: #dc2626; font-weight: bold; }
+    </style>
+</head>
+<body class="bg-gray-100 p-5">
+    <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg">
+        <header class="text-center mb-8 border-b pb-4">
+            <h1 class="text-2xl font-bold text-blue-800">TAYTAY DOCTORS MULTISPECIALTY HOSPITAL</h1>
+            <p class="text-gray-600 font-semibold">AGIMAT PhilHealth Compliance Audit Tool</p>
+        </header>
+
+        <form id="auditForm">
+            <div class="section-card">
+                <h2 class="text-lg font-bold mb-3 text-blue-700">I. User Access Verification</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="text" placeholder="Employee Name" class="border p-2 rounded w-full" required>
+                    <select class="border p-2 rounded w-full">
+                        <option>Select Role</option>
+                        <option>Nurse</option>
+                        <option>Resident on Duty (ROD)</option>
+                        <option>Billing Clerk</option>
+                    </select>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" class="h-5 w-5"> <span>Digital Signature Verified in System?</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <h2 class="text-lg font-bold mb-3 text-blue-700">II. Patient Record & Nursing</h2>
+                <div class="space-y-3">
+                    <input type="text" placeholder="Patient Case #" class="border p-2 rounded w-full" required>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox"> <span>Electronic Consent Signed & Saved? <span class="mandatory">*</span></span>
+                    </label>
+                    <p class="text-sm font-semibold mt-2">Vital Signs (Observation -> Filter):</p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
+                        <label><input type="checkbox"> Wt/Ht</label>
+                        <label><input type="checkbox"> Temp</label>
+                        <label><input type="checkbox"> PR/RR</label>
+                        <label><input type="checkbox"> BP</label>
+                        <label><input type="checkbox"> O2 Sat</label>
+                        <label><input type="checkbox"> GCS</label>
+                    </div>
+                    <label class="flex items-center space-x-2 mt-2">
+                        <input type="checkbox"> <span><b>Obstetric Index</b> (G-P-T-P-A-L) encoded? (Mandatory for Female)</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <h2 class="text-lg font-bold mb-3 text-blue-700">III. Medical Abstract & Ancillary</h2>
+                <div class="space-y-2">
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox"> <span>ROD: Review of Systems & Diagnoses filled?</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox"> <span>Clinical Abstract Template Saved? <span class="mandatory">*</span></span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox"> <span>Financial: Public Insurance Selected?</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox"> <span>Lab/Rad Meta Data: Instruments & Findings encoded?</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <h2 class="text-lg font-bold mb-3 text-blue-700">IV. Discharge Summary</h2>
+                <div class="space-y-2">
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox"> <span>Meds match Patient Charges?</span>
+                    </label>
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox"> <span>Discharge Care Plan & Signatures complete?</span>
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="w-full bg-blue-700 text-white font-bold py-3 rounded-lg hover:bg-blue-800 transition">
+                SUBMIT AUDIT REPORT
+            </button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('auditForm').onsubmit = function(e) {
+            e.preventDefault();
+            alert('Audit report captured. In a live environment, this would send data to your Google Sheet API or Database.');
+        };
+    </script>
+</body>
+</html>
