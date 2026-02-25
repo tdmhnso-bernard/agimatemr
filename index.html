@@ -3,100 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TDMH AGIMAT Audit Portal</title>
+    <title>TDMH AGIMAT Audit Tool</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .section-card { border-left: 5px solid #2563eb; margin-bottom: 1.5rem; padding: 1rem; background: #f8fafc; border-radius: 8px; }
-        .mandatory { color: #dc2626; font-weight: bold; }
+        @media print { .no-print { display: none; } body { background-color: white; } .section-card { border: 1px solid #ccc; break-inside: avoid; } }
+        .section-card { border-left: 6px solid #1e40af; background: white; margin-bottom: 1.25rem; padding: 1.5rem; border-radius: 0.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .loading { opacity: 0.5; pointer-events: none; }
     </style>
 </head>
-<body class="bg-gray-100 p-5">
-    <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg">
-        <header class="text-center mb-8 border-b pb-4">
-            <h1 class="text-2xl font-bold text-blue-800">TAYTAY DOCTORS MULTISPECIALTY HOSPITAL</h1>
-            <p class="text-gray-600 font-semibold">AGIMAT PhilHealth Compliance Audit Tool</p>
-        </header>
+<body class="bg-slate-50 font-sans text-slate-800">
+
+    <div class="max-w-5xl mx-auto py-8 px-4">
+        <div class="text-center mb-10">
+            <h1 class="text-3xl font-bold text-blue-900 uppercase">Taytay Doctors Multispecialty Hospital</h1>
+            <h2 class="text-xl font-semibold text-slate-600">AGIMAT PhilHealth Compliance Audit Portal</h2>
+            <p class="text-sm text-red-600 mt-2 font-bold uppercase no-print">*** Strict Compliance Mandatory - Memo Ref: 2026-TDMH-PHIC ***</p>
+        </div>
 
         <form id="auditForm">
             <div class="section-card">
-                <h2 class="text-lg font-bold mb-3 text-blue-700">I. User Access Verification</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <input type="text" placeholder="Employee Name" class="border p-2 rounded w-full" required>
-                    <select class="border p-2 rounded w-full">
-                        <option>Select Role</option>
-                        <option>Nurse</option>
-                        <option>Resident on Duty (ROD)</option>
-                        <option>Billing Clerk</option>
-                    </select>
-                    <label class="flex items-center space-x-2">
-                        <input type="checkbox" class="h-5 w-5"> <span>Digital Signature Verified in System?</span>
+                <h3 class="text-lg font-bold text-blue-800 border-b pb-2 mb-4">1. Access & Initial Data</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                    <div><label class="block text-xs font-bold uppercase">Auditor</label><input name="auditor" type="text" class="w-full border p-2 rounded" required></div>
+                    <div><label class="block text-xs font-bold uppercase">Staff Audited</label><input name="staff_audited" type="text" class="w-full border p-2 rounded" required></div>
+                    <div><label class="block text-xs font-bold uppercase">Patient Case #</label><input name="case_no" type="text" class="w-full border p-2 rounded" required></div>
+                </div>
+                <div class="space-y-2">
+                    <label class="flex items-center space-x-3 bg-blue-50 p-2 rounded">
+                        <input name="consent_saved" type="checkbox" value="YES" class="w-5 h-5" required>
+                        <span class="text-sm font-semibold text-blue-900">Patient Consent Form Signed and Saved in AGIMAT?</span>
+                    </label>
+                    <label class="flex items-center space-x-3 p-2 border-b">
+                        <input name="ros_encoded" type="checkbox" value="YES" class="w-4 h-4">
+                        <span class="text-sm">Record Unlocked & Review of Systems (ROS) Encoded by ROD?</span>
                     </label>
                 </div>
             </div>
 
             <div class="section-card">
-                <h2 class="text-lg font-bold mb-3 text-blue-700">II. Patient Record & Nursing</h2>
-                <div class="space-y-3">
-                    <input type="text" placeholder="Patient Case #" class="border p-2 rounded w-full" required>
-                    <label class="flex items-center space-x-2">
-                        <input type="checkbox"> <span>Electronic Consent Signed & Saved? <span class="mandatory">*</span></span>
+                <h3 class="text-lg font-bold text-blue-800 border-b pb-2 mb-4">2. Financial & Vital Signs</h3>
+                <div class="space-y-4">
+                    <label class="flex items-center space-x-3 p-2 border-b">
+                        <input name="public_insurance" type="checkbox" value="YES" class="w-4 h-4" required>
+                        <span class="text-sm font-bold">Financial Mapping: "Public Insurance" selected and saved?</span>
                     </label>
-                    <p class="text-sm font-semibold mt-2">Vital Signs (Observation -> Filter):</p>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
-                        <label><input type="checkbox"> Wt/Ht</label>
-                        <label><input type="checkbox"> Temp</label>
-                        <label><input type="checkbox"> PR/RR</label>
-                        <label><input type="checkbox"> BP</label>
-                        <label><input type="checkbox"> O2 Sat</label>
-                        <label><input type="checkbox"> GCS</label>
+                    <div>
+                        <p class="text-sm font-bold mb-2">Nursing Observations (Filter Used):</p>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
+                            <label class="flex items-center"><input name="vitals_wh" type="checkbox" value="YES" class="mr-2"> Weight/Height</label>
+                            <label class="flex items-center"><input name="vitals_tp" type="checkbox" value="YES" class="mr-2"> Temp/Pulse</label>
+                            <label class="flex items-center"><input name="vitals_rb" type="checkbox" value="YES" class="mr-2"> RR/BP</label>
+                            <label class="flex items-center"><input name="vitals_og" type="checkbox" value="YES" class="mr-2"> O2 Sat/GCS</label>
+                        </div>
                     </div>
-                    <label class="flex items-center space-x-2 mt-2">
-                        <input type="checkbox"> <span><b>Obstetric Index</b> (G-P-T-P-A-L) encoded? (Mandatory for Female)</span>
+                    <label class="flex items-center space-x-3 p-2 bg-pink-50 rounded border border-pink-100">
+                        <input name="ob_index" type="checkbox" value="YES" class="w-4 h-4">
+                        <span class="text-sm font-semibold">OB Index (G-P-T-P-A-L) present? (Mandatory for Females)</span>
                     </label>
                 </div>
             </div>
 
             <div class="section-card">
-                <h2 class="text-lg font-bold mb-3 text-blue-700">III. Medical Abstract & Ancillary</h2>
-                <div class="space-y-2">
-                    <label class="flex items-center space-x-2">
-                        <input type="checkbox"> <span>ROD: Review of Systems & Diagnoses filled?</span>
+                <h3 class="text-lg font-bold text-blue-800 border-b pb-2 mb-4">3. Abstract & Laboratory Meta-Data</h3>
+                <div class="space-y-3">
+                    <label class="flex items-center space-x-3 p-2 border-b">
+                        <input name="abstract_saved" type="checkbox" value="YES" class="w-4 h-4" required>
+                        <span class="text-sm font-bold">Clinical Abstract: Template Saved with Physician Signature?</span>
                     </label>
-                    <label class="flex items-center space-x-2">
-                        <input type="checkbox"> <span>Clinical Abstract Template Saved? <span class="mandatory">*</span></span>
-                    </label>
-                    <label class="flex items-center space-x-2">
-                        <input type="checkbox"> <span>Financial: Public Insurance Selected?</span>
-                    </label>
-                    <label class="flex items-center space-x-2">
-                        <input type="checkbox"> <span>Lab/Rad Meta Data: Instruments & Findings encoded?</span>
-                    </label>
+                    <div class="bg-gray-50 p-3 rounded text-sm">
+                        <p class="font-bold mb-1">Laboratory/Radiology Check (Financial > Payments +):</p>
+                        <label class="flex items-center space-x-2"><input name="metadata_filled" type="checkbox" value="YES"> <span>Gov (Phil E-Claims) Metadata Filled?</span></label>
+                        <label class="flex items-center space-x-2"><input name="tech_findings" type="checkbox" value="YES"> <span>Instruments & Technical Findings Encoded?</span></label>
+                    </div>
                 </div>
             </div>
 
             <div class="section-card">
-                <h2 class="text-lg font-bold mb-3 text-blue-700">IV. Discharge Summary</h2>
+                <h3 class="text-lg font-bold text-blue-800 border-b pb-2 mb-4">4. Discharge & Final Verification</h3>
                 <div class="space-y-2">
-                    <label class="flex items-center space-x-2">
-                        <input type="checkbox"> <span>Meds match Patient Charges?</span>
+                    <label class="flex items-center space-x-3 p-2 border-b">
+                        <input name="discharge_summary" type="checkbox" value="YES" class="w-4 h-4" required>
+                        <span class="text-sm">Discharge Summary: Course in ward & signatures complete?</span>
                     </label>
-                    <label class="flex items-center space-x-2">
-                        <input type="checkbox"> <span>Discharge Care Plan & Signatures complete?</span>
+                    <label class="flex items-center space-x-3 p-2 bg-yellow-50 rounded border border-yellow-200">
+                        <input name="meds_match" type="checkbox" value="YES" class="w-4 h-4" required>
+                        <span class="text-sm font-bold">Medication Validation: Meds in Summary match Patient Charges?</span>
                     </label>
                 </div>
             </div>
 
-            <button type="submit" class="w-full bg-blue-700 text-white font-bold py-3 rounded-lg hover:bg-blue-800 transition">
-                SUBMIT AUDIT REPORT
-            </button>
+            <div class="flex flex-col md:flex-row gap-4 no-print">
+                <button type="submit" id="submitBtn" class="flex-1 bg-blue-700 text-white font-bold py-3 rounded-lg hover:bg-blue-800 transition shadow-lg">SUBMIT AUDIT DATA</button>
+                <button type="button" onclick="window.print()" class="flex-1 bg-green-600 text-white font-bold py-3 rounded-lg hover:bg-green-700 transition shadow-lg">🖨️ PRINT PDF REPORT</button>
+            </div>
         </form>
     </div>
 
     <script>
-        document.getElementById('auditForm').onsubmit = function(e) {
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzbsjuOJ2gRBin1WrXDR2YbsQ4NSFRe18StuzTXf4HngoztNhrzIxSjH1KG0M6l1b3uYg/exec';
+        const form = document.getElementById('auditForm');
+        const btn = document.getElementById('submitBtn');
+
+        form.addEventListener('submit', e => {
             e.preventDefault();
-            alert('Audit report captured. In a live environment, this would send data to your Google Sheet API or Database.');
-        };
+            btn.disabled = true;
+            btn.innerHTML = "Sending Data...";
+            form.classList.add('loading');
+
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                .then(response => {
+                    alert('Success! Compliance report saved to Google Sheets.');
+                    btn.disabled = false;
+                    btn.innerHTML = "SUBMIT AUDIT DATA";
+                    form.classList.remove('loading');
+                    form.reset();
+                })
+                .catch(error => {
+                    console.error('Error!', error.message);
+                    alert('Error saving data. Please check your connection.');
+                    btn.disabled = false;
+                    btn.innerHTML = "SUBMIT AUDIT DATA";
+                    form.classList.remove('loading');
+                });
+        });
     </script>
 </body>
 </html>
