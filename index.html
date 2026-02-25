@@ -199,45 +199,54 @@
         </p>
     </div>
 
-    <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbwr5aEWStjDy51iO4DtY7vAi2Ixdi6_wPJNhG4P1B84p7rITvF2qKvH1aZgXn66jLWA2g/exec';
-        const form = document.getElementById('auditForm');
-        const btn = document.getElementById('submitBtn');
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwr5aEWStjDy51iO4DtY7vAi2Ixdi6_wPJNhG4P1B84p7rITvF2qKvH1aZgXn66jLWA2g/exec';
+    const form = document.getElementById('auditForm');
+    const btn = document.getElementById('submitBtn');
 
-        function showTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(tabId).classList.remove('hidden');
-            event.currentTarget.classList.add('active');
+    function showTab(tabId) {
+        // Hide all content
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+        // Deactivate all buttons
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        // Show selected
+        document.getElementById(tabId).classList.remove('hidden');
+        // Set active button (using event.currentTarget safely)
+        if (window.event) {
+            window.event.currentTarget.classList.add('active');
         }
+    }
 
-        form.addEventListener('submit', e => {
-            e.preventDefault();
-            btn.disabled = true;
-            btn.innerHTML = "Processing Data...";
-            form.classList.add('loading');
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        
+        // Visual feedback
+        btn.disabled = true;
+        btn.innerHTML = "⌛ UPLOADING TO DATABASE...";
+        btn.classList.add('opacity-50');
 
-            fetch(scriptURL, { 
-                method: 'POST', 
-                mode: 'no-cors', 
-                body: new FormData(form)
-            })
-            .then(() => {
-                alert('AUDIT SAVED!\nEncounter #' + form.encounter_no.value + ' has been logged to the Central Compliance Database.');
-                btn.disabled = false;
-                btn.innerHTML = "Submit Department Audit Log";
-                form.classList.remove('loading');
-                form.reset();
-                showTab('admitting');
-            })
-            .catch(error => {
-                console.error('Error!', error.message);
-                alert('Submission Error. Check your connection.');
-                btn.disabled = false;
-                btn.innerHTML = "Submit Department Audit Log";
-                form.classList.remove('loading');
-            });
+        fetch(scriptURL, { 
+            method: 'POST', 
+            mode: 'no-cors', 
+            body: new FormData(form)
+        })
+        .then(() => {
+            alert('SUCCESS!\nAudit for Encounter #' + form.encounter_no.value + ' has been submitted to TDMH records.');
+            form.reset();
+            btn.disabled = false;
+            btn.innerHTML = "Submit Department Audit Log";
+            btn.classList.remove('opacity-50');
+            showTab('admitting');
+            window.scrollTo(0,0);
+        })
+        .catch(error => {
+            console.error('Error!', error.message);
+            alert('SUBMISSION FAILED.\nCheck your internet connection or the Script URL.');
+            btn.disabled = false;
+            btn.innerHTML = "Submit Department Audit Log";
+            btn.classList.remove('opacity-50');
         });
-    </script>
-</body>
+    });
+</script>
 </html>
+
