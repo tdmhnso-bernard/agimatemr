@@ -99,33 +99,43 @@
         </form>
     </div>
 
-    <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbzbsjuOJ2gRBin1WrXDR2YbsQ4NSFRe18StuzTXf4HngoztNhrzIxSjH1KG0M6l1b3uYg/exec';
-        const form = document.getElementById('auditForm');
-        const btn = document.getElementById('submitBtn');
+<script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzbsjuOJ2gRBin1WrXDR2YbsQ4NSFRe18StuzTXf4HngoztNhrzIxSjH1KG0M6l1b3uYg/exec';
+    const form = document.getElementById('auditForm');
+    const btn = document.getElementById('submitBtn');
 
-        form.addEventListener('submit', e => {
-            e.preventDefault();
-            btn.disabled = true;
-            btn.innerHTML = "Sending Data...";
-            form.classList.add('loading');
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        
+        // Visual feedback for the auditor
+        btn.disabled = true;
+        btn.innerHTML = "Sending to AGIMAT Log...";
+        btn.classList.add('bg-gray-500');
 
-            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-                .then(response => {
-                    alert('Success! Compliance report saved to Google Sheets.');
-                    btn.disabled = false;
-                    btn.innerHTML = "SUBMIT AUDIT DATA";
-                    form.classList.remove('loading');
-                    form.reset();
-                })
-                .catch(error => {
-                    console.error('Error!', error.message);
-                    alert('Error saving data. Please check your connection.');
-                    btn.disabled = false;
-                    btn.innerHTML = "SUBMIT AUDIT DATA";
-                    form.classList.remove('loading');
-                });
+        // We use fetch with no-cors mode to bypass browser blocks
+        fetch(scriptURL, { 
+            method: 'POST', 
+            mode: 'no-cors', 
+            body: new FormData(form)
+        })
+        .then(() => {
+            // Because of 'no-cors', we don't wait for a response 
+            // We assume success if the network request didn't fail
+            alert('SUCCESS! Audit data for Taytay Doctors Hospital has been recorded.');
+            btn.disabled = false;
+            btn.innerHTML = "SUBMIT AUDIT DATA";
+            btn.classList.remove('bg-gray-500');
+            form.reset();
+        })
+        .catch(error => {
+            console.error('Error!', error.message);
+            alert('CRITICAL ERROR: Could not connect to the Google Sheet. Please check your internet or Google Script deployment settings.');
+            btn.disabled = false;
+            btn.innerHTML = "SUBMIT AUDIT DATA";
+            btn.classList.remove('bg-gray-500');
         });
-    </script>
+    });
+</script>
 </body>
 </html>
+
