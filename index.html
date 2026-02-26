@@ -52,11 +52,11 @@
             </div>
 
             <div class="flex border-b bg-white no-print overflow-x-auto sticky top-0 z-10">
-                <button type="button" onclick="showTab('admitting')" class="tab-btn active px-6 py-4 text-xs font-bold uppercase tracking-tighter transition-all">1. Admitting/Clerk</button>
-                <button type="button" onclick="showTab('nurses')" class="tab-btn px-6 py-4 text-xs font-bold uppercase tracking-tighter transition-all">2. Nurses</button>
-                <button type="button" onclick="showTab('rod')" class="tab-btn px-6 py-4 text-xs font-bold uppercase tracking-tighter transition-all">3. Resident (ROD)</button>
-                <button type="button" onclick="showTab('laboratory')" class="tab-btn px-6 py-4 text-xs font-bold uppercase tracking-tighter transition-all">4. Laboratory</button>
-                <button type="button" onclick="showTab('radiology')" class="tab-btn px-6 py-4 text-xs font-bold uppercase tracking-tighter transition-all">5. Radiology</button>
+                <button type="button" onclick="showTab(event, 'admitting')" class="tab-btn active px-6 py-4 text-xs font-bold uppercase tracking-tighter transition-all">1. Admitting/Clerk</button>
+                <button type="button" onclick="showTab(event, 'nurses')" class="tab-btn px-6 py-4 text-xs font-bold uppercase tracking-tighter transition-all">2. Nurses</button>
+                <button type="button" onclick="showTab(event, 'rod')" class="tab-btn px-6 py-4 text-xs font-bold uppercase tracking-tighter transition-all">3. Resident (ROD)</button>
+                <button type="button" onclick="showTab(event, 'laboratory')" class="tab-btn px-6 py-4 text-xs font-bold uppercase tracking-tighter transition-all">4. Laboratory</button>
+                <button type="button" onclick="showTab(event, 'radiology')" class="tab-btn px-6 py-4 text-xs font-bold uppercase tracking-tighter transition-all">5. Radiology</button>
             </div>
 
             <div class="bg-white p-8 shadow-xl rounded-b-lg mb-8">
@@ -64,7 +64,7 @@
                 <div id="admitting" class="tab-content space-y-4">
                     <h4 class="text-blue-800 font-bold border-b pb-2">DEPARTMENT: ADMITTING / BILLING</h4>
                     <div class="auth-check">
-                        <label class="flex items-center"><input name="acc_admitting" type="checkbox" value="YES" class="w-4 h-4 mr-2" required> Active AGIMAT Admitting Account Verified?</label>
+                        <label class="flex items-center"><input name="acc_admitting" type="checkbox" value="YES" class="w-4 h-4 mr-2"> Active AGIMAT Admitting Account Verified?</label>
                     </div>
                     <div class="space-y-3">
                         <label class="flex items-center p-3 border rounded"><input name="adm_1_create" type="checkbox" value="YES" class="mr-3"> 1. Create Patient Data completed?</label>
@@ -79,11 +79,10 @@
                 <div id="nurses" class="tab-content hidden space-y-4">
                     <h4 class="text-blue-800 font-bold border-b pb-2">DEPARTMENT: NURSING SERVICE</h4>
                     <div class="auth-check">
-                        <label class="flex items-center"><input name="acc_nursing" type="checkbox" value="YES" class="w-4 h-4 mr-2" required> Active AGIMAT Nursing Account Verified?</label>
+                        <label class="flex items-center"><input name="acc_nursing" type="checkbox" value="YES" class="w-4 h-4 mr-2"> Active AGIMAT Nursing Account Verified?</label>
                     </div>
                     <div class="space-y-4">
                         <label class="flex items-center p-3 border rounded"><input name="nur_3_episode" type="checkbox" value="YES" class="mr-3"> 3. New Episode > Admission & Chief Complaint Filled?</label>
-                        
                         <div class="bg-slate-50 p-4 rounded border">
                             <p class="text-xs font-bold uppercase mb-3">5. Patient Vital Signs (Filter: Observation):</p>
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-[11px]">
@@ -97,88 +96,45 @@
                                 <label class="flex items-center"><input name="v_gcs" type="checkbox" value="YES" class="mr-1"> GCS</label>
                             </div>
                         </div>
-
-                        <div class="p-4 bg-pink-50 border border-pink-100 rounded">
-                            <p class="text-xs font-bold text-pink-800 uppercase mb-2">Obstetric Index (If Female):</p>
-                            <div class="grid grid-cols-3 md:grid-cols-6 gap-2">
-                                <label class="flex flex-col items-center text-[10px] bg-white p-1 border rounded"><span class="font-bold">G</span><input name="ob_g" type="checkbox" value="YES"></label>
-                                <label class="flex flex-col items-center text-[10px] bg-white p-1 border rounded"><span class="font-bold">P</span><input name="ob_p" type="checkbox" value="YES"></label>
-                                <label class="flex flex-col items-center text-[10px] bg-white p-1 border rounded"><span class="font-bold">T</span><input name="ob_t" type="checkbox" value="YES"></label>
-                                <label class="flex flex-col items-center text-[10px] bg-white p-1 border rounded"><span class="font-bold">P</span><input name="ob_pt" type="checkbox" value="YES"></label>
-                                <label class="flex flex-col items-center text-[10px] bg-white p-1 border rounded"><span class="font-bold">A</span><input name="ob_a" type="checkbox" value="YES"></label>
-                                <label class="flex flex-col items-center text-[10px] bg-white p-1 border rounded"><span class="font-bold">L</span><input name="ob_l" type="checkbox" value="YES"></label>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
                 <div id="rod" class="tab-content hidden space-y-4">
                     <h4 class="text-blue-800 font-bold border-b pb-2">DEPARTMENT: RESIDENT ON DUTY (MD)</h4>
                     <div class="auth-check">
-                        <label class="flex items-center"><input name="acc_rod" type="checkbox" value="YES" class="w-4 h-4 mr-2" required> Active AGIMAT Physician Account Verified?</label>
+                        <label class="flex items-center"><input name="acc_rod" type="checkbox" value="YES" class="w-4 h-4 mr-2"> Active AGIMAT Physician Account Verified?</label>
                     </div>
                     <div class="space-y-4">
-                        <label class="flex items-center p-3 border rounded"><input name="rod_3_ros" type="checkbox" value="YES" class="mr-3"> 3. Review of Systems (Symptoms/Diagnoses) Encoded?</label>
-                        
+                        <label class="flex items-center p-3 border rounded"><input name="rod_3_ros" type="checkbox" value="YES" class="mr-3"> 3. Review of Systems Encoded?</label>
                         <div class="p-4 border rounded bg-blue-50">
-                            <p class="text-xs font-bold mb-3 uppercase">6. Clinical Abstract (Document > Notes + > Clinical Abstract):</p>
+                            <p class="text-xs font-bold mb-3 uppercase">6. Clinical Abstract Checklist:</p>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                                <label class="flex items-center"><input name="rod_title" type="checkbox" value="YES" class="mr-2"> Title: Name of Physician</label>
-                                <label class="flex items-center"><input name="rod_cc" type="checkbox" value="YES" class="mr-2"> Chief Complaints Filled</label>
+                                <label class="flex items-center"><input name="rod_title" type="checkbox" value="YES" class="mr-2"> Physician Name/Title</label>
+                                <label class="flex items-center"><input name="rod_cc" type="checkbox" value="YES" class="mr-2"> Chief Complaints</label>
                                 <label class="flex items-center"><input name="rod_hpi" type="checkbox" value="YES" class="mr-2"> History of Present Illness</label>
-                                <label class="flex items-center"><input name="rod_clin_hist" type="checkbox" value="YES" class="mr-2"> Clinical History</label>
-                                <label class="flex items-center"><input name="rod_procedures" type="checkbox" value="YES" class="mr-2"> Surgical/Diagnostic Procedures</label>
-                                <label class="flex items-center"><input name="rod_lab_findings" type="checkbox" value="YES" class="mr-2"> Pertinent Lab/Diagnostic Findings</label>
-                                <label class="flex items-center font-bold text-blue-700"><input name="rod_sig_save" type="checkbox" value="YES" class="mr-2"> Signature Attached & Template Saved</label>
-                            </div>
-                        </div>
-
-                        <div class="p-4 border rounded bg-yellow-50">
-                            <p class="text-xs font-bold mb-3 uppercase">8. Discharge Summary (Document > Notes +):</p>
-                            <div class="space-y-2 text-xs">
-                                <label class="flex items-center"><input name="rod_course" type="checkbox" value="YES" class="mr-2"> Course in the Ward Added</label>
-                                <label class="flex items-center font-bold text-red-700 bg-white p-1 px-2 rounded border border-red-200">
-                                    <input name="rod_meds_check" type="checkbox" value="YES" class="mr-2"> Medication matches Patient Charges?
-                                </label>
-                                <label class="flex items-center"><input name="rod_plan_sig" type="checkbox" value="YES" class="mr-2"> Discharge Care Plan & Signatures complete</label>
+                                <label class="flex items-center"><input name="rod_sig_save" type="checkbox" value="YES" class="mr-2"> Signature & Saved</label>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div id="laboratory" class="tab-content hidden space-y-4">
-                    <h4 class="text-blue-800 font-bold border-b pb-2">DEPARTMENT: LABORATORY SERVICE</h4>
+                    <h4 class="text-blue-800 font-bold border-b pb-2">DEPARTMENT: LABORATORY</h4>
                     <div class="auth-check">
-                        <label class="flex items-center"><input name="acc_lab" type="checkbox" value="YES" class="w-4 h-4 mr-2" required> Active AGIMAT Lab Resulting Account Verified?</label>
+                        <label class="flex items-center"><input name="acc_lab" type="checkbox" value="YES" class="w-4 h-4 mr-2"> Active AGIMAT Lab Account Verified?</label>
                     </div>
                     <div class="p-4 bg-orange-50 border border-orange-200 rounded">
-                        <p class="text-xs font-bold mb-3 uppercase">7. Clinical Records Meta-Data (Financial > Payments + > Gov Phil E-Claims):</p>
-                        <div class="space-y-4">
-                            <label class="flex items-center font-bold text-sm"><input name="lab_form_open" type="checkbox" value="YES" class="mr-3"> Meta Data/Clinical Records Form Populated?</label>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-semibold">
-                                <label class="flex items-center border p-2 bg-white rounded"><input name="lab_instruments" type="checkbox" value="YES" class="mr-2"> Instruments Filled Up</label>
-                                <label class="flex items-center border p-2 bg-white rounded"><input name="lab_tech_desc" type="checkbox" value="YES" class="mr-2"> Technical & Procedure Description</label>
-                                <label class="flex items-center border p-2 bg-white rounded md:col-span-2"><input name="lab_findings" type="checkbox" value="YES" class="mr-2"> Findings and Conclusion Completed</label>
-                            </div>
-                        </div>
+                        <label class="flex items-center font-bold text-sm mb-2"><input name="lab_form_open" type="checkbox" value="YES" class="mr-3"> Meta-Data/Clinical Records Completed?</label>
                     </div>
                 </div>
 
                 <div id="radiology" class="tab-content hidden space-y-4">
-                    <h4 class="text-blue-800 font-bold border-b pb-2">DEPARTMENT: RADIOLOGY SERVICE</h4>
+                    <h4 class="text-blue-800 font-bold border-b pb-2">DEPARTMENT: RADIOLOGY</h4>
                     <div class="auth-check">
-                        <label class="flex items-center"><input name="acc_rad" type="checkbox" value="YES" class="w-4 h-4 mr-2" required> Active AGIMAT Rad Resulting Account Verified?</label>
+                        <label class="flex items-center"><input name="acc_rad" type="checkbox" value="YES" class="w-4 h-4 mr-2"> Active AGIMAT Rad Account Verified?</label>
                     </div>
                     <div class="p-4 bg-blue-50 border border-blue-200 rounded">
-                        <p class="text-xs font-bold mb-3 uppercase">7. Clinical Records Meta-Data (Financial > Payments + > Gov Phil E-Claims):</p>
-                        <div class="space-y-4">
-                            <label class="flex items-center font-bold text-sm"><input name="rad_form_open" type="checkbox" value="YES" class="mr-3"> Meta Data/Clinical Records Form Populated?</label>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-semibold">
-                                <label class="flex items-center border p-2 bg-white rounded"><input name="rad_instruments" type="checkbox" value="YES" class="mr-2"> Instruments (Equipment) Filled</label>
-                                <label class="flex items-center border p-2 bg-white rounded"><input name="rad_tech_desc" type="checkbox" value="YES" class="mr-2"> Technical & Procedure Description</label>
-                                <label class="flex items-center border p-2 bg-white rounded md:col-span-2"><input name="rad_findings" type="checkbox" value="YES" class="mr-2"> Findings and Conclusion Completed</label>
-                            </div>
-                        </div>
+                        <label class="flex items-center font-bold text-sm mb-2"><input name="rad_form_open" type="checkbox" value="YES" class="mr-3"> Meta-Data/Clinical Records Completed?</label>
                     </div>
                 </div>
 
@@ -195,58 +151,52 @@
         </form>
 
         <p class="text-center text-[10px] text-slate-400 mt-8 no-print tracking-widest uppercase">
-            Official TDMH PhilHealth Compliance Internal Tool v3.0.1
+            Official TDMH PhilHealth Compliance Internal Tool v3.1.0
         </p>
     </div>
 
-  <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwr5aEWStjDy51iO4DtY7vAi2Ixdi6_wPJNhG4P1B84p7rITvF2qKvH1aZgXn66jLWA2g/exec';
-    const form = document.getElementById('auditForm');
-    const btn = document.getElementById('submitBtn');
+    <script>
+        // REPLACE THIS URL with your latest Web App URL from Google Apps Script
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwr5aEWStjDy51iO4DtY7vAi2Ixdi6_wPJNhG4P1B84p7rITvF2qKvH1aZgXn66jLWA2g/exec';
+        const form = document.getElementById('auditForm');
+        const btn = document.getElementById('submitBtn');
 
-    function showTab(tabId) {
-        // Hide all content
-        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
-        // Deactivate all buttons
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        // Show selected
-        document.getElementById(tabId).classList.remove('hidden');
-        // Set active button (using event.currentTarget safely)
-        if (window.event) {
-            window.event.currentTarget.classList.add('active');
+        function showTab(e, tabId) {
+            e.preventDefault();
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabId).classList.remove('hidden');
+            e.currentTarget.classList.add('active');
         }
-    }
 
-    form.addEventListener('submit', e => {
-        e.preventDefault();
-        
-        // Visual feedback
-        btn.disabled = true;
-        btn.innerHTML = "⌛ UPLOADING TO DATABASE...";
-        btn.classList.add('opacity-50');
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            btn.disabled = true;
+            btn.innerHTML = "⌛ UPLOADING TO DATABASE...";
+            btn.style.opacity = "0.5";
 
-        fetch(scriptURL, { 
-            method: 'POST', 
-            mode: 'no-cors', 
-            body: new FormData(form)
-        })
-        .then(() => {
-            alert('SUCCESS!\nAudit for Encounter #' + form.encounter_no.value + ' has been submitted to TDMH records.');
-            form.reset();
-            btn.disabled = false;
-            btn.innerHTML = "Submit Department Audit Log";
-            btn.classList.remove('opacity-50');
-            showTab('admitting');
-            window.scrollTo(0,0);
-        })
-        .catch(error => {
-            console.error('Error!', error.message);
-            alert('SUBMISSION FAILED.\nCheck your internet connection or the Script URL.');
-            btn.disabled = false;
-            btn.innerHTML = "Submit Department Audit Log";
-            btn.classList.remove('opacity-50');
+            fetch(scriptURL, { 
+                method: 'POST', 
+                mode: 'no-cors', 
+                body: new FormData(form)
+            })
+            .then(() => {
+                alert('AUDIT LOGGED!\nEncounter #' + form.encounter_no.value + ' has been saved to the sheet.');
+                btn.disabled = false;
+                btn.innerHTML = "Submit Department Audit Log";
+                btn.style.opacity = "1";
+                form.reset();
+                showTab({ preventDefault: () => {}, currentTarget: document.querySelector('.tab-btn') }, 'admitting');
+                window.scrollTo(0, 0);
+            })
+            .catch(error => {
+                console.error('Error!', error.message);
+                alert('SUBMISSION ERROR. Check your internet or Script URL.');
+                btn.disabled = false;
+                btn.innerHTML = "Submit Department Audit Log";
+                btn.style.opacity = "1";
+            });
         });
-    });
-</script>
+    </script>
+</body>
 </html>
-
